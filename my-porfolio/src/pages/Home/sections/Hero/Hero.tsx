@@ -1,35 +1,35 @@
-import { Grid, styled } from "@mui/material"
+import { Container, Grid, styled, Typography } from "@mui/material"
 import Avatar from "../../../../assets/images/images.jpg"
 const Hero = () => {
 
   const StyledHero = styled("div")(() => ({
-    backgroundColor: "black"
+    backgroundColor: "black",
+    height: "100vh",
   }))
 
   const StyledImg = styled("img")(() => ({
     borderRadius: "50%",
+    width: "80%"
   }))
 
 
   return (
     <>
       <StyledHero>
-        <Grid container spacing={2}>
-          <Grid size={8}>
-            size=8
-         </Grid>
-          <Grid size={4}>
-            size=4
-         </Grid>
-          <Grid size={4}>
-            size=4
-         </Grid>
-          <Grid size={8}>
-            size=8
-         </Grid>
-        </Grid>
+        <Container>
 
-        <StyledImg src={Avatar} alt="Avatar" />
+          <Grid container spacing={2}>
+            <Grid size={4}>
+              <StyledImg src={Avatar} alt="Avatar" />
+            </Grid>
+            <Grid size={8}>
+              <Typography color="primary" variant="h1"> Davi Rocha </Typography>
+              <Typography color="primary" variant="h2"> Desenvolvedor Fullstack! </Typography>
+            </Grid>
+          </Grid>
+        </Container>/
+
+
       </StyledHero>
 
     </>
