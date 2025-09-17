@@ -1,4 +1,4 @@
-import { Container, Grid, styled, Typography } from "@mui/material"
+import { Button, Container, Grid, styled, Typography } from "@mui/material"
 import Avatar from "../../../../assets/images/images.jpg"
 const Hero = () => {
 
@@ -25,6 +25,8 @@ const Hero = () => {
             <Grid size={8}>
               <Typography color="primary" variant="h1"> Davi Rocha </Typography>
               <Typography color="primary" variant="h2"> Desenvolvedor Fullstack! </Typography>
+              <Button>Download CV</Button>
+              <Button>Contato</Button>
             </Grid>
           </Grid>
         </Container>/
