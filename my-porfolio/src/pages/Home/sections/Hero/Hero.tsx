@@ -1,8 +1,9 @@
-import { Button, Container,  styled, Typography } from "@mui/material"
-import Grid from '@mui/material/Grid';
+import { Button, Container, Grid, styled, Typography } from "@mui/material"
+
 import Avatar from "../../../../assets/images/images.jpg"
 import DownloadIcon from '@mui/icons-material/Download';
 import EmailIcon from '@mui/icons-material/Email';
+import VideogameAssetIcon from '@mui/icons-material/VideogameAsset';
 const Hero = () => {
 
   const StyledHero = styled("div")(() => ({
@@ -21,21 +22,33 @@ const Hero = () => {
       <StyledHero>
         <Container>
 
-          <Grid container spacing={2}>
-            <Grid item xs={4}>
+          <Grid container spacing={2} >
+            <Grid  >
               <StyledImg src={Avatar} alt="Avatar" />
             </Grid>
-            <Grid item xs={8}>
+            <Grid >
               <Typography color="primary" variant="h1" textAlign="center"> Davi Rocha </Typography>
               <Typography color="primary" variant="h2" textAlign="center"> Desenvolvedor Fullstack! </Typography>
-              <Button variant="outlined" >
-                <DownloadIcon />
-                Download CV
-              </Button>
-              <Button variant="outlined">
-                <EmailIcon />
-                Contato
-              </Button>
+              <Grid container display ="flex" justifyContent="center">
+                <Grid  > 
+                  <Button variant="outlined" >
+                    <DownloadIcon />
+                    Download CV
+                  </Button>
+                </Grid>
+                <Grid >
+                  <Button variant="outlined">
+                    <EmailIcon />
+                    Contato
+                  </Button>
+                </Grid>
+                <Grid >
+                  <Button variant="outlined">
+                    <VideogameAssetIcon />
+                    Jogo da Velha
+                  </Button>
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
         </Container>
