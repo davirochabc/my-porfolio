@@ -1,19 +1,39 @@
 import React, { useState } from "react";
+import SendIcon from "@mui/icons-material/Send";
 
-const palavras = ["REACT", "TYPESCRIPT", "JOGO", "PROGRAMAR"];
+const palavras = [
+  "REACT", "TYPESCRIPT", "JOGO", "PROGRAMAR", "DESAFIO", "COMPONENTE",
+  "ESTADO", "PROPRIEDADE", "FUNCAO", "VARIAVEL", "OBJETO", "ARRAY",
+  "STRING", "NUMERO", "BOOLEANO", "NAVEGADOR", "SERVIDOR", "BACKEND",
+  "FRONTEND", "FULLSTACK", "DESENVOLVEDOR", "SOFTWARE"
+];
 
 const MAX_TENTATIVAS = 6;
 
-export default function Forca() {
+interface ForcaProps {
+  onClose: () => void;
+}
+
+export default function Forca({ onClose }: ForcaProps) {
   const [palavra] = useState(
     palavras[Math.floor(Math.random() * palavras.length)]
   );
   const [tentativas, setTentativas] = useState<string[]>([]);
+  const [entrada, setEntrada] = useState("");
   const erros = tentativas.filter((l) => !palavra.includes(l)).length;
 
   const handleChute = (letra: string) => {
+    letra = letra.toUpperCase();
     if (!tentativas.includes(letra) && erros < MAX_TENTATIVAS) {
       setTentativas([...tentativas, letra]);
+    }
+  };
+
+  const handleInput = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (entrada.trim() !== "") {
+      handleChute(entrada[0].toUpperCase());
+      setEntrada("");
     }
   };
 
@@ -25,32 +45,45 @@ export default function Forca() {
   const venceu = palavraOculta.replace(/ /g, "") === palavra;
   const perdeu = erros >= MAX_TENTATIVAS;
 
-  const alfabeto = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-
   return (
-    <div className="flex flex-col items-center gap-4 p-6 text-center">
-      <h1 className="text-2xl font-bold">Jogo da Forca</h1>
+    <div >
+      {/* Botão fechar */}
+      <button
+        onClick={onClose}
+      >
+       X
+      </button>
 
-      <p className="text-xl tracking-widest">{palavraOculta}</p>
-      <p>Erros: {erros} / {MAX_TENTATIVAS}</p>
+      <h1 >🎮 Jogo da Forca</h1>
 
-      <div className="grid grid-cols-7 gap-2 max-w-md">
-        {alfabeto.map((letra) => (
-          <button
-            key={letra}
-            className="p-2 border rounded disabled:opacity-50"
-            onClick={() => handleChute(letra)}
-            disabled={tentativas.includes(letra) || venceu || perdeu}
-          >
-            {letra}
-          </button>
-        ))}
-      </div>
+      {/* Palavra */}
+      <p >{palavraOculta}</p>
+      <p >
+        Erros: <span>{erros}</span> / {MAX_TENTATIVAS}
+      </p>
 
-      {venceu && <p className="text-green-600 font-bold">🎉 Você venceu!</p>}
+      {/* Input para digitar letras */}
+      <form onSubmit={handleInput} className="flex gap-2">
+        <input
+          type="text"
+          maxLength={1}
+          value={entrada}
+          onChange={(e) => setEntrada(e.target.value.toUpperCase())}
+          disabled={venceu || perdeu}
+        />
+        <button
+          disabled={venceu || perdeu}
+        >
+          <SendIcon fontSize="small" /> 
+        </button>
+      </form>
+
+      {/* Status final */}
+      {venceu && <p >🎉 Você venceu!</p>}
       {perdeu && (
-        <p className="text-red-600 font-bold">
-           Você perdeu! A palavra era {palavra}.
+        <p>
+          ❌ Você perdeu! A palavra era{" "}
+          <span >{palavra}</span>.
         </p>
       )}
     </div>
