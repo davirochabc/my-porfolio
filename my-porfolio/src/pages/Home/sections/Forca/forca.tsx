@@ -1,4 +1,14 @@
 import React, { useState } from "react";
+import {
+  Card,
+  CardContent,
+  Typography,
+  IconButton,
+  TextField,
+  Box,
+  Button,
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import SendIcon from "@mui/icons-material/Send";
 
 const palavras = [
@@ -46,46 +56,104 @@ export default function Forca({ onClose }: ForcaProps) {
   const perdeu = erros >= MAX_TENTATIVAS;
 
   return (
-    <div >
-      {/* Botão fechar */}
-      <button
-        onClick={onClose}
+    <Box
+      sx={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        background: "rgba(0,0,0,0.6)",
+        zIndex: 1000,
+      }}
+    >
+      <Card
+        sx={{
+          width: "400px",
+          borderRadius: 3,
+          boxShadow: 5,
+        }}
       >
-       X
-      </button>
+        <CardContent>
+          {/* Botão fechar */}
+          <Box display="flex" justifyContent="flex-end">
+            <IconButton onClick={onClose}>
+              <CloseIcon />
+            </IconButton>
+          </Box>
 
-      <h1 >🎮 Jogo da Forca</h1>
+          <Typography variant="h5" align="center" gutterBottom>
+            🎮 Jogo da Forca
+          </Typography>
 
-      {/* Palavra */}
-      <p >{palavraOculta}</p>
-      <p >
-        Erros: <span>{erros}</span> / {MAX_TENTATIVAS}
-      </p>
+          {/* Palavra */}
+          <Typography
+            variant="h4"
+            align="center"
+            letterSpacing={2}
+            sx={{ mb: 2 }}
+          >
+            {palavraOculta}
+          </Typography>
 
-      {/* Input para digitar letras */}
-      <form onSubmit={handleInput} className="flex gap-2">
-        <input
-          type="text"
-          maxLength={1}
-          value={entrada}
-          onChange={(e) => setEntrada(e.target.value.toUpperCase())}
-          disabled={venceu || perdeu}
-        />
-        <button
-          disabled={venceu || perdeu}
-        >
-          <SendIcon fontSize="small" /> 
-        </button>
-      </form>
+          <Typography align="center" sx={{ mb: 2 }}>
+            Erros: <b>{erros}</b> / {MAX_TENTATIVAS}
+          </Typography>
 
-      {/* Status final */}
-      {venceu && <p >🎉 Você venceu!</p>}
-      {perdeu && (
-        <p>
-          ❌ Você perdeu! A palavra era{" "}
-          <span >{palavra}</span>.
-        </p>
-      )}
-    </div>
+          {/* Input */}
+          <Box
+            component="form"
+            onSubmit={handleInput}
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            gap={1}
+          >
+            <TextField
+              variant="outlined"
+              size="small"
+              type="text"
+              inputProps={{ maxLength: 1, style: { textAlign: "center" } }}
+              value={entrada}
+              onChange={(e) => setEntrada(e.target.value.toUpperCase())}
+              disabled={venceu || perdeu}
+            />
+            <Button
+              type="submit"
+              variant="contained"
+              endIcon={<SendIcon />}
+              disabled={venceu || perdeu}
+            >
+              Chutar
+            </Button>
+          </Box>
+
+          {/* Status final */}
+          {venceu && (
+            <Typography
+              align="center"
+              color="success.main"
+              fontWeight="bold"
+              sx={{ mt: 2 }}
+            >
+              🎉 Você venceu!
+            </Typography>
+          )}
+          {perdeu && (
+            <Typography
+              align="center"
+              color="error.main"
+              fontWeight="bold"
+              sx={{ mt: 2 }}
+            >
+              ❌ Você perdeu! A palavra era {palavra}.
+            </Typography>
+          )}
+        </CardContent>
+      </Card>
+    </Box>
   );
 }
